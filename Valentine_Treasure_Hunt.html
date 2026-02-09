@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valentine Treasure Hunt Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+  <style>
+    body {
+      background-color: pink;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map" style="width: 100%; height: 600px;"></div>
+  
+  <div style="position: absolute; bottom: 20px; left: 20px; background: white; padding: 15px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.3); max-height: 500px; overflow-y: auto; z-index: 1000;">
+    <h3 style="margin-top: 0;">Teresa's Treasure Hunt</h3>
+    <ol id="cityList" style="margin: 0; padding-left: 20px;"></ol>
+  </div>
+  
+  <div style="position: absolute; bottom: 20px; right: 20px; width: 300px; height: 100px; z-index: 1000; text-align: center;">
+    <div style="position: relative; display: inline-block;">
+      <div style="position: absolute; top: -20px; left: -30px; font-size: 25px;">❤️</div>
+      <div style="position: absolute; top: -15px; right: -30px; font-size: 30px;">❤️</div>
+      <div style="position: absolute; bottom: -10px; left: -25px; font-size: 28px;">❤️</div>
+      <div style="position: absolute; bottom: -15px; right: -35px; font-size: 26px;">❤️</div>
+      <h1 style="color: red; margin: 0; font-size: 48px; font-family: cursive;">I love you!</h1>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <script>
+
+    var map = L.map('map').setView([39.8, -98.5], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var redIcon = L.divIcon({
+      html: '<div style="font-size: 30px; color: red;">❤️</div>',
+      className: 'heart-icon',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      popupAnchor: [0, -15]
+    });
+
+    // "Will you be my valentine?" - 24 letters (including spaces and punctuation)
+    var cities = [
+      {name: 'Seattle, WA', coords: [47.6062, -122.3321], letter: 'W'},
+      {name: 'Portland, OR', coords: [45.5152, -122.6784], letter: 'i'},
+      {name: 'San Francisco, CA', coords: [37.7749, -122.4194], letter: 'l'},
+      {name: 'Los Angeles, CA', coords: [34.0522, -118.2437], letter: 'l'},
+      {name: 'Phoenix, AZ', coords: [33.4484, -112.0740], letter: 'y'},
+      {name: 'Denver, CO', coords: [39.7392, -104.9903], letter: 'o'},
+      {name: 'Albuquerque, NM', coords: [35.0844, -106.6504], letter: 'u'},
+      {name: 'Houston, TX', coords: [29.7604, -95.3698], letter: 'b'},
+      {name: 'New Orleans, LA', coords: [29.9511, -90.0715], letter: 'e'},
+      {name: 'Miami, FL', coords: [25.7617, -80.1918], letter: 'm'},
+      {name: 'Charlotte, NC', coords: [35.2271, -80.8431], letter: 'y'},
+      {name: 'Philadelphia, PA', coords: [39.9526, -75.1652], letter: 'v'},
+      {name: 'New York, NY', coords: [40.7128, -74.0060], letter: 'a'},
+      {name: 'Boston, MA', coords: [42.3601, -71.0589], letter: 'l'},
+      {name: 'Chicago, IL', coords: [41.8781, -87.6298], letter: 'e'},
+      {name: 'Detroit, MI', coords: [42.3314, -83.0458], letter: 'n'},
+      {name: 'Minneapolis, MN', coords: [44.9778, -93.2650], letter: 't'},
+      {name: 'Kansas City, MO', coords: [39.0997, -94.5786], letter: 'i'},
+      {name: 'Nashville, TN', coords: [36.1627, -86.7816], letter: 'n'},
+      {name: 'Memphis, TN', coords: [35.1495, -90.0490], letter: 'e'},
+      {name: 'St. Louis, MO', coords: [38.6270, -90.1994], letter: '?'},
+      {name: 'Easton, PA', coords: [40.688431, 	-75.220734], letter: '<3'}
+    ];
+
+    cities.forEach(function(city, index) {
+      L.marker(city.coords, {icon: redIcon}).addTo(map)
+        .bindPopup('<b>' + city.name + '</b><br><h1 style="color: red; text-align: center;">' + city.letter + '</h1>');
+      
+      var listItem = document.createElement('li');
+      listItem.textContent = city.name;
+      document.getElementById('cityList').appendChild(listItem);
+    });
+
+  </script>
+
+</body>
+</html>
